@@ -54,6 +54,8 @@ sed -i'' "s/namespace:.*/namespace: $NAMESPACE/g" ./deploy/rbac.yaml
 oc create -f deploy/rbac.yaml
 oc create role use-scc-hostmount-anyuid --verb=use --resource=scc --resource-name=hostmount-anyuid -n $NAMESPACE
 oc adm policy add-role-to-user use-scc-hostmount-anyuid system:serviceaccount:$NAMESPACE:nfs-client-provisioner
+# or do not use above two commands, by using:
+oc adm policy add-scc-to-user hostmount-anyuid -z nfs-client-provisioner
 ```
 
 修改 deployment.yaml 中nfs server 的地址和路径  
